@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "dist",
-        "rootDir": "src",
+        "rootDir": "lib",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
@@ -24,7 +24,7 @@
         "incremental": true
     },
     "include": [
-        "src/**/*.ts"
+        "lib"
     ],
     "exclude": [
         "node_modules"
