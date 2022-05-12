@@ -33,6 +33,8 @@ export namespace FPrinter {
 
         abstract printFiscalReport(report: Fiscal.Report): Promise<Response>;
 
+        abstract printCancel(cancel: Fiscal.Cancel): Promise<Response>;
+
         // abstract printNonFiscal(nonfiscal: Fiscal.NonFiscal): Promise<Response>;
 
         // abstract printInvoice(invoice: Fiscal.Invoice): Promise<Response>;

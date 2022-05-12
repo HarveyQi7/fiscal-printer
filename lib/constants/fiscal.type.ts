@@ -31,7 +31,7 @@ export namespace Fiscal {
         lottery?: Lottery,
         refunds?: Refund[],
         subtotals?: Subtotal[],
-        payments: Payment[],
+        payments?: Payment[],
         barCode?: BarCode,
         qrCode?: QrCode,
         graphicCoupon?: GraphicCoupon,
@@ -43,6 +43,15 @@ export namespace Fiscal {
         operator?: string,
         timeout?: number,
         openDrawer?: OpenDrawer,
+    }
+
+    export type Cancel = {
+        type: CancelType,
+        zRepNum: string,
+        docNum: string,
+        date: string,
+        fiscalNUm: string,
+        operator?: string,
     }
 
     // export type NonFiscal = {
@@ -183,6 +192,11 @@ export namespace Fiscal {
         DAILY_FINANCIAL_REPORT,
         DAILY_FISCAL_CLOUSE,
         ALL,
+    }
+
+    export enum CancelType {
+        REFUND = 'REFUND',
+        VOID = 'VOID'
     }
 
     // export enum MessageType {

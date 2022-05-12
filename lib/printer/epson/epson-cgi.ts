@@ -8,7 +8,7 @@ export class EpsonCgiClient extends FPrinter.AbstractClient {
 
     private static XML_ROOT = 's:Envelope';
     private static XML_BODY = 's:Body';
-    private static XML_RESPONSE = 's:response';
+    private static XML_RESPONSE = 'response';
 
     /**
      * commercial document
@@ -25,6 +25,15 @@ export class EpsonCgiClient extends FPrinter.AbstractClient {
      */
     async printFiscalReport(report: Fiscal.Report): Promise<FPrinter.Response> {
         const xmlDoc = this.convertReportToXmlDoc(report);
+        return this.send(xmlDoc);
+    }
+
+    /**
+     * print a commercial refund/void document
+     * @param cancel 
+     */
+    async printCancel(cancel: Fiscal.Cancel): Promise<FPrinter.Response> {
+        const xmlDoc = this.convertCancelToXmlDoc(cancel);
         return this.send(xmlDoc);
     }
 
@@ -401,6 +410,16 @@ export class EpsonCgiClient extends FPrinter.AbstractClient {
             });
         }
         return printerFiscalReport;
+    }
+
+    private convertCancelToXmlDoc(cancel: Fiscal.Cancel): xmlbuilder.XMLDocument {
+        const printerFiscalReceipt = xmlbuilder.create('printerFiscalReceipt');
+        printerFiscalReceipt.ele('printRecMessage', {
+            operator: cancel.operator ?? 1,
+            messageType: '4',
+            message: `${cancel.type} ${cancel.zRepNum} ${cancel.docNum} ${cancel.date} ${cancel.fiscalNUm}`
+        });
+        return printerFiscalReceipt;
     }
 
     /**
