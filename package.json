@@ -1,20 +1,20 @@
 {
     "name": "fiscal-printer",
     "author": "harvey7",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A typescript module for fiscal printers support.",
     "keywords": [
         "fiscal",
         "printer",
         "fiscal printer"
     ],
-    "homepage": "https://gitlab.com/HarveyQi7/fiscal-printer",
+    "homepage": "https://github.com/HarveyQi7/fiscal-printer",
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/HarveyQi7/fiscal-printer.git"
+        "url": "https://github.com/HarveyQi7/fiscal-printer.git"
     },
     "bugs": {
-        "url": "https://gitlab.com/HarveyQi7/fiscal-printer/-/issues"
+        "url": "https://github.com/HarveyQi7/fiscal-printer/issues"
     },
     "license": "MIT",
     "main": "./dist/lib/index.js",
