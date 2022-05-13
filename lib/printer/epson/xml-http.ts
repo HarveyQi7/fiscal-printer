@@ -4,7 +4,7 @@ import { FPrinter } from "../../constants/fprinter.type";
 import * as xmlbuilder from 'xmlbuilder';
 import { Parser } from 'xml2js';
 
-export class EpsonCgiClient extends FPrinter.AbstractClient {
+export class EpsonXmlHttpClient extends FPrinter.Client {
 
     private static XML_ROOT = 's:Envelope';
     private static XML_BODY = 's:Body';
@@ -127,9 +127,9 @@ export class EpsonCgiClient extends FPrinter.AbstractClient {
      */
     private parseRequest(xmlDoc: xmlbuilder.XMLDocument): string {
         const reqXmlStr = xmlbuilder
-            .create(EpsonCgiClient.XML_ROOT, { version: '1.0', encoding: 'utf-8' })
+            .create(EpsonXmlHttpClient.XML_ROOT, { version: '1.0', encoding: 'utf-8' })
             .att('xmlns:s', 'http://schemas.xmlsoap.org/soap/envelope/')
-            .ele(EpsonCgiClient.XML_BODY)
+            .ele(EpsonXmlHttpClient.XML_BODY)
             .importDocument(xmlDoc)
             .end({ pretty: true });
         return reqXmlStr;
@@ -153,7 +153,7 @@ export class EpsonCgiClient extends FPrinter.AbstractClient {
         // parse to object
         const xmlObj = await parser.parseStringPromise(xmlStr);
         // get response data
-        const response = xmlObj[EpsonCgiClient.XML_ROOT][EpsonCgiClient.XML_BODY][EpsonCgiClient.XML_RESPONSE];
+        const response = xmlObj[EpsonXmlHttpClient.XML_ROOT][EpsonXmlHttpClient.XML_BODY][EpsonXmlHttpClient.XML_RESPONSE];
         return {
             ok: response.success ? true : false,
             body: response
@@ -388,7 +388,7 @@ export class EpsonCgiClient extends FPrinter.AbstractClient {
     }
 
     /**
-     * convert `Fiscal.Report` to the object that cgi server supports.
+     * convert `Fiscal.Report` to the object that printer server supports.
      * @param report 
      * @returns 
      */
@@ -412,32 +412,37 @@ export class EpsonCgiClient extends FPrinter.AbstractClient {
         return printerFiscalReport;
     }
 
+    /**
+     * convert `Fiscal.Cancel` to the object that printer server supports.
+     * @param cancel 
+     * @returns 
+     */
     private convertCancelToXmlDoc(cancel: Fiscal.Cancel): xmlbuilder.XMLDocument {
         const printerFiscalReceipt = xmlbuilder.create('printerFiscalReceipt');
         printerFiscalReceipt.ele('printRecMessage', {
             operator: cancel.operator ?? 1,
             messageType: '4',
-            message: `${cancel.type} ${cancel.zRepNum} ${cancel.docNum} ${cancel.date} ${cancel.fiscalNUm}`
+            message: `${cancel.type} ${cancel.zRepNum} ${cancel.docNum} ${cancel.date} ${cancel.fiscalNum}`
         });
         return printerFiscalReceipt;
     }
 
     /**
-     * convert `Fiscal.NonFiscal` to the object that cgi server supports.
+     * convert `Fiscal.NonFiscal` to the object that printer server supports.
      * @param nonFiscal 
      * @returns 
      */
     // private convertNonFiscalToXmlDoc(nonFiscal: Fiscal.NonFiscal): xmlbuilder.XMLDocument { }
 
     /**
-     * convert `Fiscal.Invoice` to the object that cgi server supports.
+     * convert `Fiscal.Invoice` to the object that printer server supports.
      * @param invoice 
      * @returns 
      */
     // private convertInvoiceToXmlDoc(invoice: Fiscal.Invoice): xmlbuilder.XMLDocument { }
 
     /**
-     * convert `Fiscal.Command` to the object that cgi server supports.
+     * convert `Fiscal.Command` to the object that printer server supports.
      * @param commands
      * @returns 
      */

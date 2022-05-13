@@ -17,7 +17,7 @@ export namespace FPrinter {
         }
     };
 
-    export abstract class AbstractClient {
+    export abstract class Client {
 
         private readonly config: Config;
 

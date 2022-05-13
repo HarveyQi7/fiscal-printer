@@ -3,14 +3,14 @@ import { DefaultServer } from "../fixtures/default-server.fixture";
 import { Parser } from "xml2js";
 import { Server } from "http";
 import assert from "assert";
-import { EpsonCgiClient } from "../../lib/printer/epson/epson-cgi";
+import { EpsonXmlHttpClient } from "../../lib/printer/epson/xml-http";
 import { Fiscal } from "../../lib/constants/fiscal.type";
 import { text } from "express";
 
 describe('epson-cgi', () => {
 
     let server: Server;
-    let client: EpsonCgiClient;
+    let client: EpsonXmlHttpClient;
 
     before(() => {
         const app = DefaultServer.create();
@@ -86,7 +86,7 @@ describe('epson-cgi', () => {
         });
         server = app.listen(80);
 
-        client = new EpsonCgiClient({
+        client = new EpsonXmlHttpClient({
             host: '127.0.0.1',
             deviceId: 'local_printer',
             timeout: 10000
@@ -132,7 +132,7 @@ describe('epson-cgi', () => {
             zRepNum: '0134',
             docNum: '0001',
             date: '01012022',
-            fiscalNUm: '11111111111'
+            fiscalNum: '11111111111'
         });
         console.log(response);
         assert.ok(response.ok);

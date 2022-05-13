@@ -50,7 +50,7 @@ export namespace Fiscal {
         zRepNum: string,
         docNum: string,
         date: string,
-        fiscalNUm: string,
+        fiscalNum: string,
         operator?: string,
     }
 
